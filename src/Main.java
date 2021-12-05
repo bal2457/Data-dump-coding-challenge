@@ -1,10 +1,40 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
+
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
 		//Open file
 		//Import data from file
 		//Process data into data structure
+		
+		//JSON Data structure, uses Server instance as key, and data network/time/value in wrapper function as value
+		//Map<String, Wrapper> JSONData = new HashMap<>(); 
+		
+		JSONParser jsonParser = new JSONParser();
+		File file = new File("data.json");
+		Object obj = jsonParser.parse(new FileReader(file));
+		JSONArray jsonArray = (JSONArray) obj;
+		
+		int index = 0;
+		while(!jsonArray.isEmpty()) {
+			
+			System.out.println(jsonArray.get(index));
+			index++;
+		}
+		
+		
+		
 		
 		//Calculate the total average number of queries that each server (data1 and data2 combined) received
 		
@@ -16,4 +46,25 @@ public class Main {
 
 	}
 
+}
+
+//Wrapper class for holding JSON Data
+//Assumes data has data network stored as string, time set in ISO 8601 format, and value stored as integer
+class Wrapper{
+	
+	private String dataNetwork;
+	private OffsetDateTime time;
+	private int value;
+	
+	public Wrapper(String dataNetwork, OffsetDateTime time, int value) {
+		this.dataNetwork = dataNetwork;
+		this.time = time;
+		this.value = value;
+	}
+	
+	public String getDataNetwork(){return this.dataNetwork;}
+	public OffsetDateTime getTime(){return this.time;}
+	public int getValue(){return this.value;}
+	
+	
 }
