@@ -19,18 +19,32 @@ public class Main {
 		//Process data into data structure
 		
 		//JSON Data structure, uses Server instance as key, and data network/time/value in wrapper function as value
-		//Map<String, Wrapper> JSONData = new HashMap<>(); 
+		Map<String, Wrapper> JSONData = new HashMap<>(); 
 		
+		//Creates JSON Array structure to iterate over JSON
 		JSONParser jsonParser = new JSONParser();
 		File file = new File("data.json");
 		Object obj = jsonParser.parse(new FileReader(file));
 		JSONArray jsonArray = (JSONArray) obj;
 		
-		int index = 0;
-		while(!jsonArray.isEmpty()) {
+		//String values to retrieve values from JSON
+		String ip = "instance";
+		String network = "data_network";
+		String timestamp = "timestamp";
+		String value = "value";
+		
+		//Iterates over JSON and adds all values to HashMap structure
+		for(int index = 0; index < jsonArray.size(); index++) {
+			//System.out.println(jsonArray.get(index));
+			Object j = jsonArray.remove(index);
+			JSONObject jobj = (JSONObject) j;
+			if(jobj.get(value) != null) {
+				JSONData.put((String)jobj.get(ip), new Wrapper((String)jobj.get(network), OffsetDateTime.parse((CharSequence) jobj.get(timestamp)) , Integer.parseInt((String) jobj.get(value))));
+			}else {
+				JSONData.put((String)jobj.get(ip), new Wrapper((String)jobj.get(network), OffsetDateTime.parse((CharSequence) jobj.get(timestamp)) , 0));
+			}
 			
-			System.out.println(jsonArray.get(index));
-			index++;
+			
 		}
 		
 		
@@ -68,3 +82,10 @@ class Wrapper{
 	
 	
 }
+
+/*for(Wrapper w: JSONData.values()) {
+System.out.println(w.getDataNetwork());
+System.out.println(w.getTime());
+System.out.println(w.getValue());
+
+}*/
