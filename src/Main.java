@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,9 @@ import org.json.simple.parser.*;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
+		
+		
+		Timestamp startTimestamp = new Timestamp(System.currentTimeMillis());
 		
 		//1. Ingest attached data from a file
 		
@@ -46,7 +50,7 @@ public class Main {
 			}	
 		}
 
-		
+		Timestamp firstTimestamp = new Timestamp(System.currentTimeMillis());
 		
 		
 		
@@ -82,7 +86,7 @@ public class Main {
 		}
 		
 		
-		
+		Timestamp secondTimestamp = new Timestamp(System.currentTimeMillis());
 		
 		
 		
@@ -121,7 +125,7 @@ public class Main {
 		
 		
 		
-		
+		Timestamp thirdTimestamp = new Timestamp(System.currentTimeMillis());
 		
 		
 		
@@ -160,13 +164,24 @@ public class Main {
 			System.out.format("\t %d%n",serverSpikeMap.get(s));
 		}
 		
+		Timestamp fourthTimestamp = new Timestamp(System.currentTimeMillis());
 		
 		
 		
 		
 		
+		//5.Profile your code. Add timestamps between each step 1 to 4 above and print the time(in any unit you want) it took to output the result
+		//Format and printing for timestamps for each step
+		System.out.print("\nStep \t\t\t Time");
+		System.out.printf("\nStep1 \t\t\t %dms",firstTimestamp.getTime() - startTimestamp.getTime());
+		System.out.printf("\nStep2 \t\t\t %dms",secondTimestamp.getTime() - firstTimestamp.getTime());
+		System.out.printf("\nStep3 \t\t\t %dms",thirdTimestamp.getTime() - secondTimestamp.getTime());
+		System.out.printf("\nStep4 \t\t\t %dms",fourthTimestamp.getTime() - thirdTimestamp.getTime());
 		
-		//Profile your code. Add timestamps between each step 1 to 4 above and print the time(in any unit you want) it took to output the result
+				
+		
+		
+		
 
 	}
 	
