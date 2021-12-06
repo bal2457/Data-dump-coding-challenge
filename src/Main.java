@@ -40,8 +40,8 @@ public class Main {
 		//Iterates over JSON and adds all values to ArrayList structure
 		for(int index = 0; index < jsonArray.size(); index++) {
 			
-			Object j = jsonArray.get(index);
-			JSONObject jobj = (JSONObject) j;
+			//Object j = jsonArray.get(index);
+			JSONObject jobj = (JSONObject) jsonArray.get(index);
 			if(jobj.get(value) != null) {
 				JSONData.add(new JSONWrapper((String)jobj.get(network), (String)jobj.get(ip), OffsetDateTime.parse((CharSequence) jobj.get(timestamp)) , Integer.parseInt((String) jobj.get(value))));	
 			}
@@ -185,7 +185,7 @@ public class Main {
 
 	}
 	
-	//helper method for determining if queries are a spike, assumes a spike is at least 700 queries
+	//helper method for determining if queries are a spike, assumes a spike is at least 700 queries per instance
 	static boolean isSpike(int spike) {
 		int spikeValue = 700;
 		if(spike >= spikeValue)return true;
@@ -217,6 +217,7 @@ class JSONWrapper{
 	
 }
 
+//Wrapper class for holding server queries and time stamps
 class ServerQueryWrapper{
 	
 	private int totalQueries;
